@@ -45,7 +45,7 @@ pub enum BaseFeeMode {
 }
 
 #[zero_copy]
-#[derive(Debug, InitSpace, Default)]
+#[derive(Debug, InitSpace, Default, AnchorDeserialize)]
 pub struct PoolFeesConfig {
     pub base_fee: BaseFeeConfig,
     pub dynamic_fee: DynamicFeeConfig,
@@ -149,7 +149,7 @@ impl PoolFeesConfig {
 }
 
 #[zero_copy]
-#[derive(Debug, InitSpace, Default)]
+#[derive(Debug, InitSpace, Default, AnchorDeserialize)]
 pub struct BaseFeeConfig {
     pub cliff_fee_numerator: u64,
     // reverse order to ensure it is backward-compatible on fee scheduler
@@ -202,7 +202,7 @@ impl BaseFeeConfig {
 }
 
 #[zero_copy]
-#[derive(Debug, InitSpace, Default)]
+#[derive(Debug, InitSpace, Default, AnchorDeserialize)]
 pub struct DynamicFeeConfig {
     pub initialized: u8, // 0, ignore for dynamic fee
     pub padding: [u8; 7],
@@ -249,7 +249,7 @@ impl DynamicFeeConfig {
 }
 
 #[zero_copy]
-#[derive(Debug, InitSpace, Default)]
+#[derive(Debug, InitSpace, Default, AnchorDeserialize)]
 pub struct LockedVestingConfig {
     pub amount_per_period: u64,
     pub cliff_duration_from_migration_time: u64,
@@ -399,7 +399,7 @@ impl MigrationFeeOption {
 }
 
 #[account(zero_copy)]
-#[derive(InitSpace, Debug, Default)]
+#[derive(InitSpace, Debug, Default, AnchorDeserialize)]
 pub struct PoolConfig {
     /// quote mint
     pub quote_mint: Pubkey,
@@ -472,7 +472,7 @@ pub struct PoolConfig {
 const_assert_eq!(PoolConfig::INIT_SPACE, 1040);
 
 #[zero_copy]
-#[derive(InitSpace, Debug, Default)]
+#[derive(InitSpace, Debug, Default, AnchorDeserialize)]
 pub struct LiquidityDistributionConfig {
     pub sqrt_price: u128,
     pub liquidity: u128,
