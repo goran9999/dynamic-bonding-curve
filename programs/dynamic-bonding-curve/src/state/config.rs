@@ -1,4 +1,4 @@
-use anchor_lang::prelude::*;
+use anchor_lang::prelude::{borsh::BorshDeserialize, *};
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use ruint::aliases::U256;
 use static_assertions::const_assert_eq;
@@ -399,7 +399,7 @@ impl MigrationFeeOption {
 }
 
 #[account(zero_copy)]
-#[derive(InitSpace, Debug, Default, AnchorDeserialize)]
+#[derive(InitSpace, Debug, Default, BorshDeserialize)]
 pub struct PoolConfig {
     /// quote mint
     pub quote_mint: Pubkey,
