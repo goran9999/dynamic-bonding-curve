@@ -27,8 +27,8 @@ ruint = "1.9.0"
 num-traits = "0.2.19"
 num_enum = "0.7.0"
 num = "0.4.3"
-mpl-token-metadata = "5.1.0"
-spl-token-metadata-interface = "0.6"
+mpl-token-metadata = "*"
+spl-token-metadata-interface = "*"
 dynamic-amm = { path = "../../libs/dynamic-amm" }
 damm-v2 = { path = "../../libs/damm-v2" }
 locker = { path = "../../libs/locker" }

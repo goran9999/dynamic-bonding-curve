@@ -85,7 +85,7 @@ pub fn get_migration_base_token(
             let quote = U256::from(quote_amount).safe_shl(128)?;
             // round up
             let (mut base, rem) = quote.div_rem(price);
-            if !rem.is_zero() {
+            if rem == U256::from(0) {
                 base = base.safe_add(U256::from(1))?;
             }
             require!(base <= U256::from(u64::MAX), PoolError::MathOverflow);

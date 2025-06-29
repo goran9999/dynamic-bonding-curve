@@ -93,7 +93,7 @@ impl FeeRateLimiter {
                 FEE_DENOMINATOR.into(),
             )?);
             let x0 = U256::from(self.reference_amount);
-            let one = U256::ONE;
+            let one = U256::from(1);
             let two = U256::from(2);
             // because we all calculate in U256, so it is safe to avoid safe math
             let trading_fee_numerator = if a < max_index {

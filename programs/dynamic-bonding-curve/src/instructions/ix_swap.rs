@@ -10,11 +10,11 @@ use crate::{
     token::{transfer_from_pool, transfer_from_user},
     EvtSwap, PoolError,
 };
-use anchor_lang::prelude::*;
 use anchor_lang::solana_program::instruction::{
     get_processed_sibling_instruction, get_stack_height,
 };
 use anchor_lang::solana_program::sysvar;
+use anchor_lang::{prelude::*, Discriminator};
 use anchor_spl::token_interface::{Mint, TokenAccount, TokenInterface};
 
 use crate::instruction::Swap as SwapInstruction;
@@ -294,7 +294,7 @@ pub fn validate_single_swap_instruction<'c, 'info>(
         let mut sibling_index = 0;
         while let Some(sibling_instruction) = get_processed_sibling_instruction(sibling_index) {
             if sibling_instruction.program_id == crate::ID
-                && sibling_instruction.data[..8].eq(SwapInstruction::DISCRIMINATOR)
+                && sibling_instruction.data[..8].eq(&SwapInstruction::DISCRIMINATOR)
             {
                 if sibling_instruction.accounts[2].pubkey.eq(pool) {
                     return Err(PoolError::FailToValidateSingleSwapInstruction.into());
@@ -322,12 +322,12 @@ pub fn validate_single_swap_instruction<'c, 'info>(
                     return Err(PoolError::FailToValidateSingleSwapInstruction.into());
                 }
             }
-        } else if instruction.data[..8].eq(SwapInstruction::DISCRIMINATOR) {
-            if instruction.accounts[2].pubkey.eq(pool) {
-                // otherwise, we just need to search swap instruction discriminator, so creator can still bundle initialzing pool and swap at 1 tx
-                msg!("Multiple swaps not allowed");
-                return Err(PoolError::FailToValidateSingleSwapInstruction.into());
-            }
+        } else if instruction.data[..8].eq(&SwapInstruction::DISCRIMINATOR)
+            && instruction.accounts[2].pubkey.eq(pool)
+        {
+            // otherwise, we just need to search swap instruction discriminator, so creator can still bundle initialzing pool and swap at 1 tx
+            msg!("Multiple swaps not allowed");
+            return Err(PoolError::FailToValidateSingleSwapInstruction.into());
         }
     }
 

@@ -1,3 +1,5 @@
+use std::str::FromStr;
+
 use anchor_lang::prelude::*;
 use anchor_spl::token_interface::{Mint, TokenAccount, TokenInterface};
 
@@ -41,7 +43,7 @@ pub struct ClaimProtocolFeesCtx<'info> {
     /// The treasury token a account
     #[account(
         mut,
-        associated_token::authority = treasury::ID,
+        associated_token::authority = Pubkey::from_str(treasury::ID).unwrap(),
         associated_token::mint = base_mint,
         associated_token::token_program = token_base_program,
     )]
@@ -50,7 +52,7 @@ pub struct ClaimProtocolFeesCtx<'info> {
     /// The treasury token b account
     #[account(
         mut,
-        associated_token::authority = treasury::ID,
+        associated_token::authority = Pubkey::from_str(treasury::ID).unwrap(),
         associated_token::mint = quote_mint,
         associated_token::token_program = token_quote_program,
     )]

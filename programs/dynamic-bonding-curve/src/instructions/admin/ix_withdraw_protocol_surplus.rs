@@ -1,3 +1,5 @@
+use std::str::FromStr;
+
 use anchor_lang::prelude::*;
 use anchor_spl::token_interface::{Mint, TokenAccount, TokenInterface};
 
@@ -31,7 +33,7 @@ pub struct ProtocolWithdrawSurplusCtx<'info> {
     /// The treasury quote token account
     #[account(
         mut,
-        associated_token::authority = treasury::ID,
+        associated_token::authority = Pubkey::from_str(treasury::ID).unwrap(),
         associated_token::mint = quote_mint,
         associated_token::token_program = token_quote_program,
     )]
