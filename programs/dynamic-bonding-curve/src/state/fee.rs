@@ -22,7 +22,7 @@ pub struct FeeOnAmountResult {
 }
 
 #[zero_copy]
-#[derive(Debug, InitSpace, Default)]
+#[derive(Debug, InitSpace, Default, AnchorDeserialize)]
 pub struct VolatilityTracker {
     pub last_update_timestamp: u64,
     pub padding: [u8; 8],           // Add padding for u128 alignment

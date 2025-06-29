@@ -85,7 +85,7 @@ pub enum MigrationProgress {
 }
 
 #[account(zero_copy)]
-#[derive(InitSpace, Debug, Default)]
+#[derive(InitSpace, Debug, Default, AnchorDeserialize)]
 pub struct VirtualPool {
     /// volatility tracker
     pub volatility_tracker: VolatilityTracker,
@@ -149,7 +149,7 @@ pub const PARTNER_MASK: u8 = 0b100;
 pub const CREATOR_MASK: u8 = 0b010;
 
 #[zero_copy]
-#[derive(Debug, InitSpace, Default)]
+#[derive(Debug, InitSpace, Default, AnchorDeserialize)]
 pub struct PoolMetrics {
     pub total_protocol_base_fee: u64,
     pub total_protocol_quote_fee: u64,
